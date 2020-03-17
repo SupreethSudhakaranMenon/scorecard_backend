@@ -2,16 +2,16 @@ from flask import Flask, jsonify, request
 import json
 from flask import Response
 
-from views.ConfigurationOperations import getAllConfigurationFromDB, getByConfigId, saveAConfiguration
-from views.CriteriaOperations import getAllCriteriaFromDB, getByCriteriaId, saveCriteria
-from views.FeatureOperations import getByFeatureId, getAllFeaturesFromDB, saveAFeature
 
-from flask_cors import CORS
+# import flask_cors
+
+from scorecard_backend.views.ConfigurationOperations import getByConfigId, getAllConfigurationFromDB, saveAConfiguration
+from scorecard_backend.views.CriteriaOperations import getByCriteriaId, getAllCriteriaFromDB, saveCriteria
+from scorecard_backend.views.FeatureOperations import getByFeatureId, getAllFeaturesFromDB, saveAFeature
 
 app = Flask(__name__)
-CORS(app)
-# app = Flask(__name__)
-cors = CORS(app, resources={r"/feature/*": {"origins": "*"}})
+# CORS(app)
+# cors = CORS(app, resources={r"/feature/*": {"origins": "*"}})
 
 
 @app.route('/')
@@ -63,7 +63,7 @@ def saveTheConfiguration():
 def getAllCriteria():
     return Response(json.dumps(getAllCriteriaFromDB()),  mimetype='application/json')
 
-@app.route('/criteria/getByConfigId', methods=['POST'])
+@app.route('/criteria/getByCriteriaId', methods=['POST'])
 def getSingleCriteria():
     return json.dumps(getByCriteriaId(int(request.json['id'])).__dict__), 200, {'ContentType': 'application/json'}
 

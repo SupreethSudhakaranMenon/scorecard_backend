@@ -1,6 +1,10 @@
-from database.DBConnection import databaseOperation, databaseOperationSave
-from models.Configuration import Criteria
+# from database.DBConnection import databaseOperation, databaseOperationSave
+# from models.Configuration import Criteria
 import json
+
+from scorecard_backend.database.DBConnection import databaseOperation, databaseOperationSave
+from scorecard_backend.models.Configuration import Criteria
+
 
 def getAllCriteriaFromDB():
     sql = "select * from m_criteria"

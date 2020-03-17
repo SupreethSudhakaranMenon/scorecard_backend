@@ -1,6 +1,10 @@
-from database.DBConnection import databaseOperation, databaseOperationSave
-from models.Configuration import Feature
+# from database.DBConnection import databaseOperation, databaseOperationSave
+# from models.Configuration import Feature
 import json
+
+from scorecard_backend.database.DBConnection import databaseOperation, databaseOperationSave
+from scorecard_backend.models.Configuration import Feature
+
 
 def getByFeatureId(id):
     sql = "select * from m_feature where id = '%d'" % id
