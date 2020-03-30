@@ -2,16 +2,21 @@ from flask import Flask, jsonify, request
 import json
 from flask import Response
 
+# from views.ConfigurationOperations import getAllConfigurationFromDB, getByConfigId, saveAConfiguration
+# from views.CriteriaOperations import getAllCriteriaFromDB, getByCriteriaId, saveCriteria
+# from views.FeatureOperations import getByFeatureId, getAllFeaturesFromDB, saveAFeature, getFeatureNCategoryFromDB
 
-# import flask_cors
+#from flask_cors import CORS
 
-from scorecard_backend.views.ConfigurationOperations import getByConfigId, getAllConfigurationFromDB, saveAConfiguration
-from scorecard_backend.views.CriteriaOperations import getByCriteriaId, getAllCriteriaFromDB, saveCriteria
-from scorecard_backend.views.FeatureOperations import getByFeatureId, getAllFeaturesFromDB, saveAFeature
+from scorecard_backend.views.ConfigurationOperations import getAllConfigurationFromDB, saveAConfiguration
+from scorecard_backend.views.CriteriaOperations import getAllCriteriaFromDB, getByCriteriaId, saveCriteria
+from scorecard_backend.views.FeatureOperations import getByFeatureId, getAllFeaturesFromDB, getFeatureNCategoryFromDB, \
+    saveAFeature
 
 app = Flask(__name__)
-# CORS(app)
-# cors = CORS(app, resources={r"/feature/*": {"origins": "*"}})
+#CORS(app)
+# app = Flask(__name__)
+#cors = CORS(app, resources={r"/feature/*": {"origins": "*"}})
 
 
 @app.route('/')
@@ -36,6 +41,10 @@ def saveTheFeature():
     print(request.json['id'])
     values = (data['feature'],data['value'],data['data'],data['category'],data['status'])
     return saveAFeature(data['id'],data['feature'],data['value'],data['data'],data['category'],data['status'])
+
+@app.route('/feature/featureNCategory')
+def getFeatureAndCategory():
+    return Response(json.dumps(getFeatureNCategoryFromDB()), mimetype='application/json')
 
 
 #
@@ -63,7 +72,7 @@ def saveTheConfiguration():
 def getAllCriteria():
     return Response(json.dumps(getAllCriteriaFromDB()),  mimetype='application/json')
 
-@app.route('/criteria/getByCriteriaId', methods=['POST'])
+@app.route('/criteria/getByConfigId', methods=['POST'])
 def getSingleCriteria():
     return json.dumps(getByCriteriaId(int(request.json['id'])).__dict__), 200, {'ContentType': 'application/json'}
 
@@ -73,7 +82,7 @@ def saveTheCriteria():
     data = request.json
     # print(request.json['id'])
     # values = (data['feature'],data['value'],data['data'],data['category'],data['status'])
-    return saveCriteria(None,data['feature'],data['category'],data['product'],data['datasource'],data['keyvalue'], data['sqlapi'])
+    return saveCriteria(None,data['feature'],data['category'],data['product'],data['datasource'],data['keyvalue'], data['sqlapi'], data['scoreCriteria'])
 
 # main driver function
 if __name__ == '__main__':

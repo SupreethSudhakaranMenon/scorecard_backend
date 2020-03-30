@@ -25,7 +25,9 @@ def databaseOperationSave(sqlQuery):
 
     try:
         cursor.execute(sqlQuery)
+        id = cursor.lastrowid
         db.commit()
+        # return id
         # return cursor.fetchall()
     except:
         print("Error: unable to insert data")
@@ -33,4 +35,4 @@ def databaseOperationSave(sqlQuery):
 
     # disconnect from server
     db.close()
-    return True
+    return id

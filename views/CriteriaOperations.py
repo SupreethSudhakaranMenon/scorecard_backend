@@ -1,5 +1,5 @@
-# from database.DBConnection import databaseOperation, databaseOperationSave
-# from models.Configuration import Criteria
+#from database.DBConnection import databaseOperation, databaseOperationSave
+#from models.Configuration import Criteria
 import json
 
 from scorecard_backend.database.DBConnection import databaseOperation, databaseOperationSave
@@ -29,14 +29,29 @@ def getByCriteriaId():
     else:
         return None
 
-def saveCriteria(id,feature, category, product, datasource, keyvalue, sqlapi):
+def saveCriteria(id,feature, category, product, datasource, keyvalue, sqlapi, scoreCriteria):
     if id:
         sql = "update m_criteria set feature='"+feature+"', category='"+category+"', product='"+product+"', datasource='"+datasource+"', keyvalue='"+keyvalue+"', sqlapi='"+sqlapi+"' where id=%d" %int(id)
     else:
         sql = "insert into m_criteria (product, category, datasource, sqlapi, keyvalue, feature) values ('"+feature+"','"+category+"','"+product+"','"+datasource+"','"+sqlapi+"','"+keyvalue+"')"
     print(sql)
     result = databaseOperationSave(sql)
+    # print(result)
+    # print(scoreCriteria)
+    # result = 14
+    saveCriteriaScore(scoreCriteria, result)
     if result:
         return {"status" : "SUCCESS"}
     else:
         return {"status": "FAILURE"}
+
+def saveCriteriaScore(scoreCriteria, id):
+    for  cr in scoreCriteria:
+        print(cr['criteria'])
+        print(cr['score'])
+        if(cr['id']):
+            sql = "update m_criteriascore set criteria='"+cr['criteria']+"', score='"+cr['score']+"' where csid=%d and cscriteriatableid=%d" %int(cr[id]) %id
+        else:
+            sql = "insert into m_criteriascore (cscriteriatableid, criteria, score) values ("+str(id)+",'"+cr['criteria']+"', '"+cr['score']+"')"
+        print(sql)
+        databaseOperationSave(sql)

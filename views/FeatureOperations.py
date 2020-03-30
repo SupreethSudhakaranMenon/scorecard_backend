@@ -1,5 +1,5 @@
-# from database.DBConnection import databaseOperation, databaseOperationSave
-# from models.Configuration import Feature
+#from database.DBConnection import databaseOperation, databaseOperationSave
+#from models.Configuration import Feature
 import json
 
 from scorecard_backend.database.DBConnection import databaseOperation, databaseOperationSave
@@ -25,6 +25,16 @@ def getAllFeaturesFromDB():
     if result:
         for row in result:
             feature = Feature(row[4], row[0], row[3], row[1], row[5], row[2])
+            response.append(json.dumps(feature.__dict__))
+    return response
+
+def getFeatureNCategoryFromDB():
+    sql = "select id,feature,category from m_feature"
+    result = databaseOperation(sql)
+    response = []
+    if result:
+        for row in result:
+            feature = Feature(row[2], row[0], None, row[1], None, None)
             response.append(json.dumps(feature.__dict__))
     return response
 
