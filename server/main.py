@@ -8,7 +8,7 @@ from flask import Response
 
 #from flask_cors import CORS
 
-from scorecard_backend.views.ConfigurationOperations import getAllConfigurationFromDB, saveAConfiguration
+from scorecard_backend.views.ConfigurationOperations import getAllConfigurationFromDB, getByConfigId, saveAConfiguration
 from scorecard_backend.views.CriteriaOperations import getAllCriteriaFromDB, getByCriteriaId, saveCriteria
 from scorecard_backend.views.FeatureOperations import getByFeatureId, getAllFeaturesFromDB, getFeatureNCategoryFromDB, \
     saveAFeature
