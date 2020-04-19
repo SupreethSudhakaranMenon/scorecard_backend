@@ -40,9 +40,9 @@ def getFeatureNCategoryFromDB():
 
 def saveAFeature(id,feature, value, data, category, status):
     if id:
-        sql = "update m_feature set feature='"+feature+"', value='"+value+"', data='"+data+"', category='"+category+"', status='"+status+"' where id=%d" %int(id)
+        sql = "update m_feature set feature='"+feature+"', value='"+value+"', data='"+data+"', category='"+category+"', status='"+str(status)+"' where id=%d" %int(id)
     else:
-        sql = "insert into m_feature (feature, value, data, category, status) values ('"+feature+"','"+value+"','"+data+"','"+category+"','"+status+"')"
+        sql = "insert into m_feature (feature, value, data, category, status) values ('"+feature+"','"+value+"','"+data+"','"+category+"','"+str(status)+"')"
     print(sql)
     result = databaseOperationSave(sql)
     if result:

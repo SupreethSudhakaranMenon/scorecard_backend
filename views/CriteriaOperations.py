@@ -33,7 +33,7 @@ def saveCriteria(id,feature, category, product, datasource, keyvalue, sqlapi, sc
     if id:
         sql = "update m_criteria set feature='"+feature+"', category='"+category+"', product='"+product+"', datasource='"+datasource+"', keyvalue='"+keyvalue+"', sqlapi='"+sqlapi+"' where id=%d" %int(id)
     else:
-        sql = "insert into m_criteria (product, category, datasource, sqlapi, keyvalue, feature) values ('"+feature+"','"+category+"','"+product+"','"+datasource+"','"+sqlapi+"','"+keyvalue+"')"
+        sql = "insert into m_criteria (product, category, datasource, sqlapi, keyvalue, feature) values ('" + product + "','" + category + "','" + datasource + "','" + sqlapi + "','" + keyvalue + "','" + feature + "')"
     print(sql)
     result = databaseOperationSave(sql)
     # print(result)

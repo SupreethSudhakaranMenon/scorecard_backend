@@ -12,6 +12,8 @@ from scorecard_backend.views.ConfigurationOperations import getAllConfigurationF
 from scorecard_backend.views.CriteriaOperations import getAllCriteriaFromDB, getByCriteriaId, saveCriteria
 from scorecard_backend.views.FeatureOperations import getByFeatureId, getAllFeaturesFromDB, getFeatureNCategoryFromDB, \
     saveAFeature
+from scorecard_backend.views.ScorecardOperations import getByAge, getByGender
+
 
 app = Flask(__name__)
 #CORS(app)
@@ -75,6 +77,15 @@ def getAllCriteria():
 @app.route('/criteria/getByConfigId', methods=['POST'])
 def getSingleCriteria():
     return json.dumps(getByCriteriaId(int(request.json['id'])).__dict__), 200, {'ContentType': 'application/json'}
+
+@app.route('/score/calc', methods=['POST'])
+def getCriteriaScore():
+    scoreAge = getByAge(request.json['age']);
+    scoreGender = getByGender(request.json['gender']);
+    return jsonify(
+        ageScore = scoreAge,
+        genderScore=scoreGender,
+    )
 
 @app.route('/criteria/saveCriteria',  methods=['POST'])
 def saveTheCriteria():
