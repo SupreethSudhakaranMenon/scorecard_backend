@@ -83,8 +83,10 @@ def getCriteriaScore():
     scoreAge = getByAge(request.json['age']);
     scoreGender = getByGender(request.json['gender']);
     return jsonify(
-        ageScore = scoreAge,
-        genderScore=scoreGender,
+        ageScore=scoreAge["score"],
+        ageColor=scoreAge["color"],
+        genderScore=scoreGender["score"],
+        genderColor=scoreGender["color"],
     )
 
 @app.route('/criteria/saveCriteria',  methods=['POST'])
